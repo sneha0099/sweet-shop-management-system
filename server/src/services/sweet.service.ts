@@ -91,3 +91,24 @@ export const getSweets = async (
     throw new Error('Error fetching sweets');
   }
 };
+
+export const purchaseSweet = async (id: string, quantity: number) => {
+  try {
+    const sweet = await Sweet.findById(id);
+
+    if (!sweet) {
+      throw new Error('Sweet not found');
+    }
+
+    if (sweet.quantity < quantity) {
+      throw new Error('Not enough stock');
+    }
+
+    sweet.quantity -= quantity;
+    await sweet.save();
+
+    return sweet;
+  } catch (error) {
+    throw error;
+  }
+};
