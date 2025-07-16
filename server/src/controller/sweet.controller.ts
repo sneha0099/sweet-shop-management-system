@@ -39,10 +39,19 @@ export const deleteSweet = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllSweets = async (_req: Request, res: Response) => {
+export const getAllSweets = async (req: Request, res: Response) => {
   try {
-    const sweets = await getSweets();
-    res.status(200).json(sweets);
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const { sweets, total } = await getSweets(page, limit);
+
+    res.status(200).json({
+      sweets,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch sweets' });
   }

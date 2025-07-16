@@ -29,10 +29,14 @@ export const deleteSweetById = async (id: string) => {
   }
 };
 
-export const getSweets = async () => {
+export const getSweets = async (page: number, limit: number) => {
   try {
-    const sweets = await Sweet.find();
-    return sweets;
+    const skip = (page - 1) * limit;
+
+    const sweets = await Sweet.find().skip(skip).limit(limit);
+    const total = await Sweet.countDocuments();
+
+    return { sweets, total };
   } catch (error) {
     console.error('❌ Error fetching sweets:', error);
     throw new Error('Error fetching sweets');

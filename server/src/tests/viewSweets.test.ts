@@ -33,10 +33,11 @@ describe('GET /api/sweets', () => {
     const res = await request(app).get('/api/sweets');
 
     expect(res.statusCode).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBeGreaterThanOrEqual(2);
+    expect(Array.isArray(res.body.sweets)).toBe(true);
+    expect(res.body.sweets.length).toBeGreaterThanOrEqual(2);
 
-    const sweetNames = res.body.map((s: any) => s.name);
+    const sweetNames = res.body.sweets.map((s: any) => s.name);
+
     expect(sweetNames).toContain('Kaju Katli');
     expect(sweetNames).toContain('Gulab Jamun');
   });
