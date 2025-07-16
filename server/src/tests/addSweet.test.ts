@@ -14,7 +14,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe('Post /api/sweets', () => {
+describe('Post /api/sweets/add', () => {
   it('should return sweet status 201', async () => {
     const res = await request(app).post('/api/sweets').send({
       name: 'kaju katli',
