@@ -3,8 +3,9 @@ import app from '../app';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Sweet from '../models/sweet.model';
+import path from 'path';
 
-dotenv.config({ path: '.env.test' });
+dotenv.config({ path: path.resolve(__dirname, '../../.env.test') });
 
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_TEST_URI as string);

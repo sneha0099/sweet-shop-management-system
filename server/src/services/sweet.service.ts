@@ -28,3 +28,13 @@ export const deleteSweetById = async (id: string) => {
     throw new Error('Failed to delete sweet');
   }
 };
+
+export const getSweets = async () => {
+  try {
+    const sweets = await Sweet.find();
+    return sweets;
+  } catch (error) {
+    console.error('❌ Error fetching sweets:', error);
+    throw new Error('Error fetching sweets');
+  }
+};

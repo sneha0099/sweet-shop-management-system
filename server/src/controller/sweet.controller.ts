@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { createSweet } from '../services/sweet.service';
 import { deleteSweetById } from '../services/sweet.service';
+import { getSweets } from '../services/sweet.service';
 
 export const addSweet = async (req: Request, res: Response) => {
   try {
@@ -35,5 +36,14 @@ export const deleteSweet = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('❌ Error deleting sweet:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+export const getAllSweets = async (_req: Request, res: Response) => {
+  try {
+    const sweets = await getSweets();
+    res.status(200).json(sweets);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch sweets' });
   }
 };
