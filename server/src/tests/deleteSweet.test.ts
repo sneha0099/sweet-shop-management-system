@@ -15,7 +15,7 @@ afterAll(async () => {
 });
 
 describe('DELETE /api/sweets/:id', () => {
-  it('should delete a sweet by ID and return 200', async () => {
+  it('should delete a sweet by ID and  return 200', async () => {
     // First, create a sweet
     const createRes = await request(app).post('/api/sweets').send({
       name: 'Gulab Jamun',
