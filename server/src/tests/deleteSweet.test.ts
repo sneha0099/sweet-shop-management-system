@@ -14,7 +14,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe('DELETE /api/sweets/:id', () => {
+describe('DELETE /api/sweets/delete/:id', () => {
   it('should delete a sweet by ID and return 200', async () => {
     // First, create a sweet
     const createRes = await request(app).post('/api/sweets').send({
