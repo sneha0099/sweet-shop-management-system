@@ -3,6 +3,7 @@ import { createSweet } from '../services/sweet.service';
 import { deleteSweetById } from '../services/sweet.service';
 import { getSweets } from '../services/sweet.service';
 import { purchase } from '../services/sweet.service';
+import { restock } from '../services/sweet.service';
 
 export const addSweet = async (req: Request, res: Response) => {
   try {
@@ -108,5 +109,28 @@ export const purchaseSweet = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Not enough stock' });
     }
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const restockSweet = async (req: Request, res: Response) => {
+  const sweetId = req.params.id;
+  const { quantity } = req.body;
+
+  if (!quantity || quantity <= 0) {
+    return res
+      .status(400)
+      .json({ error: 'Quantity must be a positive number' });
+  }
+
+  try {
+    const updatedSweet = await restock(sweetId, quantity);
+
+    if (!updatedSweet) {
+      return res.status(404).json({ error: 'Sweet not found' });
+    }
+
+    res.status(200).json(updatedSweet);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to restock sweet' });
   }
 };

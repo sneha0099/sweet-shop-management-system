@@ -112,3 +112,18 @@ export const purchase = async (id: string, quantity: number) => {
     throw error;
   }
 };
+
+export const restock = async (id: string, quantity: number) => {
+  try {
+    const sweet = await Sweet.findById(id);
+    if (!sweet) return null;
+
+    sweet.quantity += quantity;
+    await sweet.save();
+
+    return sweet;
+  } catch (error) {
+    console.error('❌ Error restocking sweet:', error);
+    throw error;
+  }
+};
