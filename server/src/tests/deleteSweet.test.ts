@@ -15,7 +15,7 @@ afterAll(async () => {
 });
 
 describe('DELETE /api/sweets/:id', () => {
-  it('should delete a sweet by ID and  return 200', async () => {
+  it('should delete a sweet by ID and return 200', async () => {
     // First, create a sweet
     const createRes = await request(app).post('/api/sweets').send({
       name: 'Gulab Jamun',
@@ -38,7 +38,7 @@ describe('DELETE /api/sweets/:id', () => {
   });
 
   it('should return 404 if sweet not found', async () => {
-    const fakeId = '64f000000000000000000000'; // valid format, non-existent
+    const fakeId = '64f00000000000000'; // valid format, non-existent
     const res = await request(app).delete(`/api/sweets/${fakeId}`);
     expect(res.statusCode).toBe(404);
     expect(res.body).toHaveProperty('message', 'Sweet not found');
