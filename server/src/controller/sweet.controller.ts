@@ -6,6 +6,8 @@ import { getSweets } from '../services/sweet.service';
 export const addSweet = async (req: Request, res: Response) => {
   try {
     const { name, category, price, quantity } = req.body;
+    console.log(name, category, price, quantity);
+
     const newSweet = await createSweet({ name, category, price, quantity });
     res.status(201).json(newSweet);
   } catch (err: any) {
@@ -41,16 +43,41 @@ export const deleteSweet = async (req: Request, res: Response) => {
 
 export const getAllSweets = async (req: Request, res: Response) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
+    const {
+      name,
+      category,
+      minPrice,
+      maxPrice,
+      sortBy,
+      order = 'asc',
+      page = '1',
+      limit = '10',
+    } = req.query;
 
-    const { sweets, total } = await getSweets(page, limit);
+    const filters = {
+      name: name as string,
+      category: category as string,
+      minPrice: minPrice ? parseFloat(minPrice as string) : undefined,
+      maxPrice: maxPrice ? parseFloat(maxPrice as string) : undefined,
+    };
+
+    const pagination = {
+      page: parseInt(page as string, 10),
+      limit: parseInt(limit as string, 10),
+    };
+
+    const sort = {
+      sortBy: sortBy as string,
+      order: order as string,
+    };
+
+    const { sweets, total } = await getSweets(filters, pagination, sort);
 
     res.status(200).json({
       sweets,
       total,
-      page,
-      totalPages: Math.ceil(total / limit),
+      page: pagination.page,
+      totalPages: Math.ceil(total / pagination.limit),
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch sweets' });

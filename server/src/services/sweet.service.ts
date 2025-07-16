@@ -1,5 +1,22 @@
 import Sweet from '../models/sweet.model';
 
+interface Filters {
+  name?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}
+
+interface Pagination {
+  page: number;
+  limit: number;
+}
+
+interface Sort {
+  sortBy?: string;
+  order?: string;
+}
+
 export const createSweet = async (data: {
   name: string;
   category: string;
@@ -29,12 +46,44 @@ export const deleteSweetById = async (id: string) => {
   }
 };
 
-export const getSweets = async (page: number, limit: number) => {
+export const getSweets = async (
+  filters: Filters,
+  pagination: Pagination,
+  sort: Sort
+) => {
   try {
-    const skip = (page - 1) * limit;
+    const query: any = {};
 
-    const sweets = await Sweet.find().skip(skip).limit(limit);
-    const total = await Sweet.countDocuments();
+    if (filters.name) {
+      query.name = { $regex: filters.name, $options: 'i' };
+    }
+
+    if (filters.category) {
+      query.category = filters.category;
+    }
+
+    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+      query.price = {};
+      if (filters.minPrice !== undefined) {
+        query.price.$gte = filters.minPrice;
+      }
+      if (filters.maxPrice !== undefined) {
+        query.price.$lte = filters.maxPrice;
+      }
+    }
+
+    const skip = (pagination.page - 1) * pagination.limit;
+
+    // Default sort is by name ascending
+    const sortField = sort.sortBy || 'name';
+    const sortOrder = sort.order === 'desc' ? -1 : 1;
+
+    const sweets = await Sweet.find(query)
+      .sort({ [sortField]: sortOrder })
+      .skip(skip)
+      .limit(pagination.limit);
+
+    const total = await Sweet.countDocuments(query);
 
     return { sweets, total };
   } catch (error) {
