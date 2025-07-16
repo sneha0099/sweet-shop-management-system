@@ -92,7 +92,7 @@ export const getSweets = async (
   }
 };
 
-export const purchaseSweet = async (id: string, quantity: number) => {
+export const purchase = async (id: string, quantity: number) => {
   try {
     const sweet = await Sweet.findById(id);
 

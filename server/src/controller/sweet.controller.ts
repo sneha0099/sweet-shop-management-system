@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { createSweet } from '../services/sweet.service';
 import { deleteSweetById } from '../services/sweet.service';
 import { getSweets } from '../services/sweet.service';
-import { purchaseSweet } from '../services/sweet.service';
+import { purchase } from '../services/sweet.service';
 
 export const addSweet = async (req: Request, res: Response) => {
   try {
@@ -85,7 +85,7 @@ export const getAllSweets = async (req: Request, res: Response) => {
   }
 };
 
-export const purchase = async (req: Request, res: Response) => {
+export const purchaseSweet = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { quantity } = req.body;
@@ -94,7 +94,7 @@ export const purchase = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid quantity' });
     }
 
-    const updatedSweet = await purchaseSweet(id, quantity);
+    const updatedSweet = await purchase(id, quantity);
 
     res.status(200).json({
       message: 'Sweet purchased successfully',
