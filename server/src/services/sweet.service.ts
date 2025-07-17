@@ -24,6 +24,7 @@ export const createSweet = async (data: {
   quantity: number;
 }) => {
   try {
+    // Check if a sweet with the same name already exists
     const existingSweet = await Sweet.findOne({ name: data.name });
     if (existingSweet) {
       throw new Error('Sweet already exists');
@@ -128,6 +129,7 @@ export const restock = async (id: string, quantity: number) => {
   }
 };
 
+// this fetches all categories from the sweet schema
 export const getCategories = async () => {
   try {
     const enumValues = Sweet.schema.path('category')?.options.enum;
