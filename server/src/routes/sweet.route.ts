@@ -4,6 +4,7 @@ import { deleteSweet } from '../controller/sweet.controller';
 import { getAllSweets } from '../controller/sweet.controller';
 import { purchaseSweet } from '../controller/sweet.controller';
 import { restockSweet } from '../controller/sweet.controller';
+import { getAllCategories } from '../controller/sweet.controller';
 
 const sweetRoutes = Router();
 
@@ -12,5 +13,6 @@ sweetRoutes.delete('/delete/:id', deleteSweet);
 sweetRoutes.get('/', getAllSweets);
 sweetRoutes.post('/purchase/:id', purchaseSweet);
 sweetRoutes.patch('/restock/:id', restockSweet);
+sweetRoutes.get('/categories', getAllCategories);
 
 export default sweetRoutes;

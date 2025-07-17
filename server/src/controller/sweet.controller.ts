@@ -4,11 +4,12 @@ import { deleteSweetById } from '../services/sweet.service';
 import { getSweets } from '../services/sweet.service';
 import { purchase } from '../services/sweet.service';
 import { restock } from '../services/sweet.service';
+import { getCategories } from '../services/sweet.service';
 
 export const addSweet = async (req: Request, res: Response) => {
   try {
     const { name, category, price, quantity } = req.body;
-    console.log(name, category, price, quantity);
+
 
     const newSweet = await createSweet({ name, category, price, quantity });
     res.status(201).json(newSweet);
@@ -132,5 +133,17 @@ export const restockSweet = async (req: Request, res: Response) => {
     res.status(200).json(updatedSweet);
   } catch (error) {
     res.status(500).json({ error: 'Failed to restock sweet' });
+  }
+};
+
+export const getAllCategories = async (req: Request, res: Response) => {
+  try {
+    const categories = await getCategories();
+    if (!categories) {
+      return res.status(404).json({ error: "Failed to fetch categories" });
+    }
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch categories" });
   }
 };
