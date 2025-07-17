@@ -18,6 +18,8 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// this test checks if the POST /api/sweets/purchase/:id endpoint allows purchasing a sweet
+// it checks if the sweet exists, if there is enough stock, and updates the quantity accordingly
 describe('POST /api/sweets/purchase/:id', () => {
   beforeEach(async () => {
     const sweet = await Sweet.create({

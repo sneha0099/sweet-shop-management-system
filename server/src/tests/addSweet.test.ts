@@ -14,6 +14,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// this test checks if the POST /api/sweets/add endpoint returns a 201 status code
 describe('Post /api/sweets/add', () => {
   it('should return sweet status 201', async () => {
     const res = await request(app).post('/api/sweets/add').send({

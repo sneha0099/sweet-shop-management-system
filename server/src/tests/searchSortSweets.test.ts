@@ -16,6 +16,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// this test checks if the GET /api/sweets endpoint supports search, filter, sort, and pagination
 describe('GET /api/sweets with search, filter, sort and pagination', () => {
   beforeEach(async () => {
     await Sweet.insertMany([
@@ -30,6 +31,7 @@ describe('GET /api/sweets with search, filter, sort and pagination', () => {
     await Sweet.deleteMany();
   });
 
+  // this test checks if the GET /api/sweets endpoint returns all sweets
   it('should return sweets filtered by category, sorted by price descending', async () => {
     const res = await request(app).get(
       '/api/sweets?category=Milk-Based&sortBy=price&order=desc'
@@ -46,6 +48,7 @@ describe('GET /api/sweets with search, filter, sort and pagination', () => {
     });
   });
 
+  //filter by name of the sweet having 'ka' in it
   it('should return sweets with name containing "ka"', async () => {
     const res = await request(app).get('/api/sweets?name=ka');
 

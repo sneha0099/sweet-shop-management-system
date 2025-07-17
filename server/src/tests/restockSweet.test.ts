@@ -18,6 +18,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// this test checks if the PATCH /api/sweets/restock/:id endpoint allows restocking a sweet
 describe('PATCH /api/sweets/restock/:id', () => {
   beforeEach(async () => {
     const sweet = await Sweet.create({
