@@ -127,3 +127,16 @@ export const restock = async (id: string, quantity: number) => {
     throw error;
   }
 };
+
+export const getCategories = async () => {
+  try {
+    const enumValues = Sweet.schema.path('category')?.options.enum;
+    if (!enumValues) {
+      throw new Error('Enum values not found on category field');
+    }
+    return enumValues;
+  } catch (error) {
+    console.error('❌ Error fetching enum categories:', error);
+    throw new Error('Error fetching categories');
+  }
+};
