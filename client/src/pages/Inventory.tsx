@@ -292,7 +292,7 @@ const InventoryPage = () => {
                               : "bg-red-100 text-red-800 border-red-300"
                           } rounded-full px-3 py-1`}
                         >
-                          {sweet.quantity} stems
+                          {sweet.quantity} items
                         </Badge>
                       </div>
                       <div className="flex items-center gap-2 pt-2">
