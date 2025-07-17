@@ -6,6 +6,8 @@ import { purchase } from '../services/sweet.service';
 import { restock } from '../services/sweet.service';
 import { getCategories } from '../services/sweet.service';
 
+// this adds a new sweet to the database
+// it checks if the sweet already exists by name
 export const addSweet = async (req: Request, res: Response) => {
   try {
     const { name, category, price, quantity } = req.body;
@@ -21,6 +23,7 @@ export const addSweet = async (req: Request, res: Response) => {
   }
 };
 
+// this deletes a sweet by its ID
 export const deleteSweet = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -44,6 +47,8 @@ export const deleteSweet = async (req: Request, res: Response) => {
   }
 };
 
+// this gets all sweets with optional filters, pagination, and sorting
+// it allows filtering by name, category, price range, and sorting by a field in ascending or descending order
 export const getAllSweets = async (req: Request, res: Response) => {
   try {
     const {
@@ -87,6 +92,8 @@ export const getAllSweets = async (req: Request, res: Response) => {
   }
 };
 
+// this allows a user to purchase a sweet by its ID and quantity
+// it checks if the sweet exists and if there is enough stock it updates the quantity
 export const purchaseSweet = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -113,6 +120,7 @@ export const purchaseSweet = async (req: Request, res: Response) => {
   }
 };
 
+// this allows restocking a sweet by its ID and quantity
 export const restockSweet = async (req: Request, res: Response) => {
   const sweetId = req.params.id;
   const { quantity } = req.body;
@@ -136,6 +144,8 @@ export const restockSweet = async (req: Request, res: Response) => {
   }
 };
 
+// this fetches all categories from the sweet schema
+// it returns the enum values defined in the schema for the category field
 export const getAllCategories = async (req: Request, res: Response) => {
   try {
     const categories = await getCategories();
