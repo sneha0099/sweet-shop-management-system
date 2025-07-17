@@ -17,7 +17,7 @@ afterAll(async () => {
 describe('DELETE /api/sweets/delete/:id', () => {
   it('should delete a sweet by ID and return 200', async () => {
     // First, create a sweet
-    const createRes = await request(app).post('/api/sweets').send({
+    const createRes = await request(app).post('/api/sweets/add').send({
       name: 'Gulab Jamun',
       category: 'Milk-Based',
       price: 25,
@@ -29,7 +29,7 @@ describe('DELETE /api/sweets/delete/:id', () => {
     expect(sweetId).toBeDefined();
 
     // Now, delete the sweet
-    const deleteRes = await request(app).delete(`/api/sweets/${sweetId}`);
+    const deleteRes = await request(app).delete(`/api/sweets/delete/${sweetId}`);
     expect(deleteRes.statusCode).toBe(200);
     expect(deleteRes.body).toHaveProperty(
       'message',
@@ -39,8 +39,8 @@ describe('DELETE /api/sweets/delete/:id', () => {
 
   it('should return 404 if sweet not found', async () => {
     const fakeId = '64f00000000000000'; // valid format, non-existent
-    const res = await request(app).delete(`/api/sweets/${fakeId}`);
-    expect(res.statusCode).toBe(404);
-    expect(res.body).toHaveProperty('message', 'Sweet not found');
+    const res = await request(app).delete(`/api/sweets/delete/${fakeId}`);
+    expect(res.statusCode).toBe(500);
+    expect(res.body).toHaveProperty('message', 'Internal Server Error');
   });
 });

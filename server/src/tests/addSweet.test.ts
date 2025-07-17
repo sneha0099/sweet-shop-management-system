@@ -16,7 +16,7 @@ afterAll(async () => {
 
 describe('Post /api/sweets/add', () => {
   it('should return sweet status 201', async () => {
-    const res = await request(app).post('/api/sweets').send({
+    const res = await request(app).post('/api/sweets/add').send({
       name: 'kaju katli',
       category: 'Nut-Based',
       price: 50,
